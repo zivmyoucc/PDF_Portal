@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SecureDocs | פורטל הגשת טפסים</title>
+  <meta name="description" content="פורטל מאובטח למילוי טפסים והגשת מסמכי PDF עם הזדהות" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <div id="particles"></div>
+
+  <!-- ══════════════ LOGIN ══════════════ -->
+  <section id="loginScreen" class="screen active">
+    <div class="login-container">
+      <div class="login-card glass-card">
+
+        <div class="brand">
+          <div class="brand-icon">
+            <svg viewBox="0 0 40 40" fill="none">
+              <rect width="40" height="40" rx="12" fill="url(#bg1)" />
+              <path d="M12 10h10l6 6v14H12V10z" fill="white" fill-opacity=".9" />
+              <path d="M22 10l6 6h-6V10z" fill="white" fill-opacity=".5" />
+              <rect x="15" y="18" width="10" height="1.5" rx=".75" fill="url(#bg1)" />
+              <rect x="15" y="21.5" width="10" height="1.5" rx=".75" fill="url(#bg1)" />
+              <rect x="15" y="25" width="7" height="1.5" rx=".75" fill="url(#bg1)" />
+              <defs>
+                <linearGradient id="bg1" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#6366f1" />
+                  <stop offset="1" stop-color="#8b5cf6" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div>
+            <h1 class="brand-name">SecureDocs</h1>
+            <p class="brand-sub">פורטל הגשת טפסים מאובטח</p>
+          </div>
+        </div>
+
+        <div class="login-header">
+          <h2>כניסה למערכת</h2>
+          <p>בחר את שיטת ההזדהות המתאימה</p>
+        </div>
+
+        <!-- ── Azure AD / Microsoft Login ── -->
+        <div id="azureSection" style="display:none">
+          <button class="btn-microsoft" id="msLoginBtn">
+            <!-- Microsoft logo -->
+            <svg width="20" height="20" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="1" y="1" width="9" height="9" fill="#F25022" />
+              <rect x="11" y="1" width="9" height="9" fill="#7FBA00" />
+              <rect x="1" y="11" width="9" height="9" fill="#00A4EF" />
+              <rect x="11" y="11" width="9" height="9" fill="#FFB900" />
+            </svg>
+            <span class="btn-text">כניסה עם Microsoft / Azure AD</span>
+            <span class="btn-spinner hidden"></span>
+          </button>
+
+          <div id="azureError" class="alert alert-error hidden" style="margin-top:.875rem">
+            <svg viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                clip-rule="evenodd" />
+            </svg>
+            <span id="azureErrorMsg">שגיאת כניסה עם Azure AD</span>
+          </div>
+
+          <div class="azure-info">
+            <svg viewBox="0 0 16 16" fill="currentColor" width="12">
+              <path d="M8 1l6 2.5V8c0 3.5-3 6-6 7C5 14 2 11.5 2 8V3.5L8 1z" />
+            </svg>
+            OAuth 2.0 · PKCE · Entra ID
+          </div>
+        </div>
+
+        <!-- ── Google Login ── -->
+        <div id="googleSection" style="display:none; margin-top:.75rem">
+          <button class="btn-google" id="googleLoginBtn">
+            <!-- Google "G" logo -->
+            <svg width="20" height="20" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+              <path fill="#EA4335"
+                d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+              <path fill="#4285F4"
+                d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+              <path fill="#FBBC05"
+                d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+              <path fill="#34A853"
+                d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+              <path fill="none" d="M0 0h48v48H0z" />
+            </svg>
+            <span class="btn-text">כניסה עם Google</span>
+            <span class="btn-spinner hidden"></span>
+          </button>
+
+          <div id="googleError" class="alert alert-error hidden" style="margin-top:.875rem">
+            <svg viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                clip-rule="evenodd" />
+            </svg>
+            <span id="googleErrorMsg">שגיאת כניסה עם Google</span>
+          </div>
+
+          <div class="azure-info">
+            <svg viewBox="0 0 16 16" fill="currentColor" width="12">
+              <path d="M8 1l6 2.5V8c0 3.5-3 6-6 7C5 14 2 11.5 2 8V3.5L8 1z" />
+            </svg>
+            OAuth 2.0 · OpenID Connect · Google
+          </div>
+        </div>
+
+        <div class="login-divider" id="loginDivider" style="display:none">
+          <span>או כניסה מקומית (הדגמה)</span>
+        </div>
+
+        <!-- ── Local fallback login ── -->
+        <div id="localSection">
+          <form id="loginForm" autocomplete="off" novalidate>
+            <div class="form-group">
+              <label for="username">שם משתמש</label>
+              <div class="input-wrapper">
+                <span class="input-icon"><svg viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
+                  </svg></span>
+                <input type="text" id="username" placeholder="הכנס שם משתמש" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password">סיסמה</label>
+              <div class="input-wrapper">
+                <span class="input-icon"><svg viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                      d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                      clip-rule="evenodd" />
+                  </svg></span>
+                <input type="password" id="password" placeholder="הכנס סיסמה" />
+                <button type="button" class="toggle-password" id="togglePassword">
+                  <svg id="eyeIcon" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                    <path fill-rule="evenodd"
+                      d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                      clip-rule="evenodd" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div id="loginError" class="alert alert-error hidden">
+              <svg viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                  clip-rule="evenodd" />
+              </svg>
+              <span>שם משתמש או סיסמה שגויים. נסה שוב.</span>
+            </div>
+            <button type="submit" class="btn btn-ghost btn-full" id="loginBtn">
+              <span class="btn-text">כניסה מקומית</span>
+              <span class="btn-spinner hidden"></span>
+            </button>
+          </form>
+          <div class="demo-hint">
+            <div class="hint-label">פרטי כניסה להדגמה</div>
+            <div class="hint-creds"><span><strong>משתמש:</strong> admin</span><span><strong>סיסמה:</strong> 1234</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="security-badges">
+          <span class="badge"><svg viewBox="0 0 16 16" fill="currentColor" width="10">
+              <path d="M8 1l6 2.5V8c0 3.5-3 6-6 7C5 14 2 11.5 2 8V3.5L8 1z" />
+            </svg>SSL מוצפן</span>
+          <span class="badge"><svg viewBox="0 0 16 16" fill="currentColor" width="10">
+              <path
+                d="M11 2H5C3.9 2 3 2.9 3 4v8c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM8 13a1 1 0 110-2 1 1 0 010 2z" />
+            </svg>Entra ID</span>
+          <span class="badge"><svg viewBox="0 0 16 16" fill="currentColor" width="10">
+              <path
+                d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4z" />
+            </svg>PKCE Flow</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ DASHBOARD ══════════════ -->
+  <section id="dashboardScreen" class="screen">
+
+    <!-- Navbar -->
+    <nav class="navbar glass-nav">
+      <div class="nav-brand">
+        <div class="brand-icon small">
+          <svg viewBox="0 0 40 40" fill="none">
+            <rect width="40" height="40" rx="12" fill="url(#bg2)" />
+            <path d="M12 10h10l6 6v14H12V10z" fill="white" fill-opacity=".9" />
+            <path d="M22 10l6 6h-6V10z" fill="white" fill-opacity=".5" />
+            <rect x="15" y="18" width="10" height="1.5" rx=".75" fill="white" />
+            <rect x="15" y="21.5" width="10" height="1.5" rx=".75" fill="white" />
+            <rect x="15" y="25" width="7" height="1.5" rx=".75" fill="white" />
+            <defs>
+              <linearGradient id="bg2" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#6366f1" />
+                <stop offset="1" stop-color="#8b5cf6" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="nav-title">SecureDocs</span>
+      </div>
+      <div class="nav-center">
+        <div class="nav-status"><span class="status-dot"></span><span>מחובר ומוגן</span></div>
+      </div>
+      <div class="nav-user">
+        <div class="user-avatar" id="userAvatar">A</div>
+        <span id="navUsername">admin</span>
+        <button class="btn-logout" id="logoutBtn">
+          <svg viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M3 3a1 1 0 00-1 1v12a1 1 0 001 1h7v-2H4V5h6V3H3zm13.707 7.707a1 1 0 000-1.414L14.414 7l-1.414 1.414L14.586 10H8v2h6.586l-1.586 1.586L14.414 15l2.293-2.293z"
+              clip-rule="evenodd" />
+          </svg>
+          יציאה
+        </button>
+      </div>
+    </nav>
+
+    <main class="main-content">
+
+      <!-- Stats -->
+      <div class="stats-bar">
+        <div class="stat-card glass-card-sm">
+          <div class="stat-icon purple"><svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z" />
+            </svg></div>
+          <div class="stat-info">
+            <div class="stat-value" id="statForms">0</div>
+            <div class="stat-label">טפסים הוגשו</div>
+          </div>
+        </div>
+        <div class="stat-card glass-card-sm">
+          <div class="stat-icon blue"><svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+            </svg></div>
+          <div class="stat-info">
+            <div class="stat-value" id="statDocs">0</div>
+            <div class="stat-label">מסמכים הועלו</div>
+          </div>
+        </div>
+        <div class="stat-card glass-card-sm">
+          <div class="stat-icon green"><svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+            </svg></div>
+          <div class="stat-info">
+            <div class="stat-value" id="statToday">0</div>
+            <div class="stat-label">הועלו היום</div>
+          </div>
+        </div>
+        <div class="stat-card glass-card-sm">
+          <div class="stat-icon orange"><svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 4l5 2.18V11c0 3.5-2.33 6.79-5 7.93C9.33 17.79 7 14.5 7 11V7.18L12 5z" />
+            </svg></div>
+          <div class="stat-info">
+            <div class="stat-value">מאובטח</div>
+            <div class="stat-label">סטטוס</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Navigation -->
+      <div class="tab-nav glass-card-sm">
+        <button class="tab-btn active" id="tabFillForm" data-tab="fillForm">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75 1.84-1.83zM3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z" />
+          </svg>
+          מילוי טופס
+        </button>
+        <button class="tab-btn" id="tabUpload" data-tab="uploadDoc">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z" />
+          </svg>
+          העלאת מסמך
+        </button>
+        <button class="tab-btn" id="tabHistory" data-tab="history">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M13 3a9 9 0 00-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0013 21a9 9 0 000-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z" />
+          </svg>
+          היסטוריה
+          <span class="tab-badge" id="tabHistoryBadge">0</span>
+        </button>
+      </div>
+
+      <!-- ── TAB: Fill Form ────────────────────────── -->
+      <div class="tab-panel active" id="panelFillForm">
+        <div class="section-card glass-card">
+          <div class="section-header">
+            <h2>מילוי טופס בקשה</h2>
+            <p>מלא את הפרטים הנדרשים וצרף מסמכי PDF רלוונטיים</p>
+          </div>
+
+          <form id="submissionForm" novalidate>
+
+            <!-- Form Type Selector -->
+            <div class="form-type-selector">
+              <p class="field-label">סוג הטופס</p>
+              <div class="type-cards">
+                <label class="type-card active" for="typeGeneral">
+                  <input type="radio" name="formType" id="typeGeneral" value="general" checked />
+                  <span class="type-icon"><svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 7V3.5L18.5 9H13z" />
+                    </svg></span>
+                  <span class="type-label">בקשה כללית</span>
+                </label>
+                <label class="type-card" for="typeComplaint">
+                  <input type="radio" name="formType" id="typeComplaint" value="complaint" />
+                  <span class="type-icon"><svg viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z" />
+                    </svg></span>
+                  <span class="type-label">פנייה / תלונה</span>
+                </label>
+                <label class="type-card" for="typePermit">
+                  <input type="radio" name="formType" id="typePermit" value="permit" />
+                  <span class="type-icon"><svg viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z" />
+                    </svg></span>
+                  <span class="type-label">בקשת אישור</span>
+                </label>
+                <label class="type-card" for="typeReport">
+                  <input type="radio" name="formType" id="typeReport" value="report" />
+                  <span class="type-icon"><svg viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" />
+                    </svg></span>
+                  <span class="type-label">הגשת דוח</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Personal Details -->
+            <div class="form-section">
+              <div class="form-section-title">
+                <span class="section-num">1</span>
+                פרטים אישיים
+              </div>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="fullName">שם מלא <span class="req">*</span></label>
+                  <div class="input-wrapper">
+                    <span class="input-icon"><svg viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
+                      </svg></span>
+                    <input type="text" id="fullName" placeholder="ישראל ישראלי" required />
+                  </div>
+                  <span class="field-error" id="fullNameError"></span>
+                </div>
+                <div class="form-group">
+                  <label for="idNumber">מספר ת.ז. <span class="req">*</span></label>
+                  <div class="input-wrapper">
+                    <span class="input-icon"><svg viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                          d="M10 2a1 1 0 00-1 1v1a1 1 0 002 0V3a1 1 0 00-1-1zM4 4h3a3 3 0 006 0h3a2 2 0 012 2v9a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2zm2.5 7a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm2.45 4a2.5 2.5 0 10-4.9 0h4.9zM12 9a1 1 0 100 2h3a1 1 0 100-2h-3zm-1 4a1 1 0 011-1h2a1 1 0 110 2h-2a1 1 0 01-1-1z"
+                          clip-rule="evenodd" />
+                      </svg></span>
+                    <input type="text" id="idNumber" placeholder="000000000" maxlength="9" required />
+                  </div>
+                  <span class="field-error" id="idNumberError"></span>
+                </div>
+                <div class="form-group">
+                  <label for="email">דוא"ל <span class="req">*</span></label>
+                  <div class="input-wrapper">
+                    <span class="input-icon"><svg viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                      </svg></span>
+                    <input type="email" id="email" placeholder="example@mail.com" required />
+                  </div>
+                  <span class="field-error" id="emailError"></span>
+                </div>
+                <div class="form-group">
+                  <label for="phone">טלפון <span class="req">*</span></label>
+                  <div class="input-wrapper">
+                    <span class="input-icon"><svg viewBox="0 0 20 20" fill="currentColor">
+                        <path
+                          d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                      </svg></span>
+                    <input type="tel" id="phone" placeholder="05X-XXXXXXX" required />
+                  </div>
+                  <span class="field-error" id="phoneError"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Request Details -->
+            <div class="form-section">
+              <div class="form-section-title">
+                <span class="section-num">2</span>
+                פרטי הבקשה
+              </div>
+              <div class="form-group mb-4">
+                <label for="subject">נושא <span class="req">*</span></label>
+                <div class="input-wrapper">
+                  <span class="input-icon"><svg viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd"
+                        d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z"
+                        clip-rule="evenodd" />
+                    </svg></span>
+                  <input type="text" id="subject" placeholder="תיאור קצר של הבקשה" required />
+                </div>
+                <span class="field-error" id="subjectError"></span>
+              </div>
+              <div class="form-group mb-4">
+                <label for="priority">עדיפות</label>
+                <div class="select-wrapper">
+                  <select id="priority">
+                    <option value="low">נמוכה</option>
+                    <option value="normal" selected>רגילה</option>
+                    <option value="high">גבוהה</option>
+                    <option value="urgent">דחופה</option>
+                  </select>
+                  <span class="select-arrow"><svg viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clip-rule="evenodd" />
+                    </svg></span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="description">תיאור מפורט <span class="req">*</span></label>
+                <textarea id="description" placeholder="תאר את בקשתך בפירוט מלא..." rows="5" required></textarea>
+                <div class="char-count"><span id="charCount">0</span> / 1000 תווים</div>
+                <span class="field-error" id="descriptionError"></span>
+              </div>
+            </div>
+
+            <!-- PDF Attachments -->
+            <div class="form-section">
+              <div class="form-section-title">
+                <span class="section-num">3</span>
+                צירוף מסמכים
+                <span class="optional-tag">אופציונלי</span>
+              </div>
+              <p class="attach-hint">ניתן לצרף קבצי PDF בלבד. כל קובץ עד 20MB.</p>
+
+              <div id="formDropZone" class="drop-zone drop-zone-sm" role="button" tabindex="0">
+                <div class="drop-zone-inner">
+                  <div class="drop-icon-sm">
+                    <svg viewBox="0 0 48 48" fill="none">
+                      <circle cx="24" cy="24" r="22" fill="url(#dg)" fill-opacity=".12" />
+                      <path d="M24 32V20" stroke="url(#dg)" stroke-width="2" stroke-linecap="round" />
+                      <path d="M18 26l6-6 6 6" stroke="url(#dg)" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                      <rect x="13" y="34" width="22" height="2" rx="1" fill="url(#dg)" fill-opacity=".4" />
+                      <defs>
+                        <linearGradient id="dg" x1="2" y1="2" x2="46" y2="46" gradientUnits="userSpaceOnUse">
+                          <stop stop-color="#6366f1" />
+                          <stop offset="1" stop-color="#8b5cf6" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                  </div>
+                  <div class="drop-text">
+                    <p class="drop-title">גרור קבצי PDF לכאן</p>
+                    <label class="btn btn-outline btn-sm" for="formFileInput" style="cursor:pointer">בחר קבצים</label>
+                    <input type="file" id="formFileInput" accept=".pdf,application/pdf" multiple hidden />
+                  </div>
+                </div>
+                <div class="drop-overlay">
+                  <svg viewBox="0 0 48 48" fill="none" width="36">
+                    <path d="M24 32V20" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+                    <path d="M18 26l6-6 6 6" stroke="white" stroke-width="2.5" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                  <p>שחרר להוספה</p>
+                </div>
+              </div>
+
+              <div id="attachmentList" class="attachment-list"></div>
+            </div>
+
+            <!-- Declaration -->
+            <div class="form-section">
+              <div class="form-section-title">
+                <span class="section-num">4</span>
+                הצהרה ואישור
+              </div>
+              <label class="checkbox-label declaration-check">
+                <input type="checkbox" id="declaration" required />
+                <span class="checkmark"></span>
+                <span>אני מצהיר/ה כי המידע שמסרתי נכון ומלא, ואני מאשר/ת את תנאי השימוש במערכת.</span>
+              </label>
+              <span class="field-error" id="declarationError"></span>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn btn-ghost" id="clearFormBtn">נקה טופס</button>
+              <button type="submit" class="btn btn-primary" id="submitFormBtn">
+                <svg viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+                </svg>
+                <span class="btn-text">הגש טופס</span>
+                <span class="btn-spinner hidden"></span>
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+      <!-- ── TAB: Upload Doc ────────────────────────── -->
+      <div class="tab-panel" id="panelUploadDoc">
+        <div class="section-card glass-card">
+          <div class="section-header">
+            <h2>העלאת מסמך PDF</h2>
+            <p>גרור קבצי PDF לכאן או לחץ לבחירה · גודל מרבי 20MB לקובץ</p>
+          </div>
+
+          <div id="dropZone" class="drop-zone" role="button" tabindex="0">
+            <div class="drop-zone-inner">
+              <div class="drop-icon">
+                <svg viewBox="0 0 80 80" fill="none">
+                  <circle cx="40" cy="40" r="37" fill="url(#dg2)" fill-opacity=".1" />
+                  <path d="M40 54V30" stroke="url(#dg2)" stroke-width="2.5" stroke-linecap="round" />
+                  <path d="M28 42l12-12 12 12" stroke="url(#dg2)" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                  <rect x="22" y="57" width="36" height="3" rx="1.5" fill="url(#dg2)" fill-opacity=".3" />
+                  <defs>
+                    <linearGradient id="dg2" x1="3" y1="3" x2="77" y2="77" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#6366f1" />
+                      <stop offset="1" stop-color="#8b5cf6" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+              <div class="drop-text">
+                <p class="drop-title">גרור קבצי PDF לכאן</p>
+                <p class="drop-sub">או</p>
+                <label class="btn btn-outline" for="fileInput" style="cursor:pointer">בחר קבצים</label>
+                <input type="file" id="fileInput" accept=".pdf,application/pdf" multiple hidden />
+              </div>
+              <div class="drop-info">
+                <span class="drop-badge">PDF בלבד</span>
+                <span class="drop-badge">עד 20MB</span>
+                <span class="drop-badge">מוצפן בהעלאה</span>
+              </div>
+            </div>
+            <div class="drop-overlay">
+              <svg viewBox="0 0 48 48" fill="none" width="40">
+                <path d="M24 32V20" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+                <path d="M18 26l6-6 6 6" stroke="white" stroke-width="2.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+              <p>שחרר להעלאה</p>
+            </div>
+          </div>
+
+          <div id="uploadQueue" class="upload-queue hidden"></div>
+        </div>
+      </div>
+
+      <!-- ── TAB: History ────────────────────────────── -->
+      <div class="tab-panel" id="panelHistory">
+        <div class="section-card glass-card">
+          <div class="section-header files-header">
+            <div>
+              <h2>היסטוריית הגשות ומסמכים</h2>
+              <p>כל הקבצים מאוחסנים בצורה מאובטחת ומוצפנת</p>
+            </div>
+            <div class="files-actions">
+              <div class="search-wrapper">
+                <svg viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                    clip-rule="evenodd" />
+                </svg>
+                <input type="text" id="searchFiles" placeholder="חפש..." />
+              </div>
+              <div class="filter-select-wrap">
+                <select id="filterType">
+                  <option value="all">הכל</option>
+                  <option value="form">טפסים</option>
+                  <option value="doc">מסמכים</option>
+                </select>
+                <span class="select-arrow"><svg viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd" />
+                  </svg></span>
+              </div>
+            </div>
+          </div>
+
+          <div id="historyContainer">
+            <div id="emptyHistory" class="empty-state">
+              <svg viewBox="0 0 80 80" fill="none" width="80">
+                <circle cx="40" cy="40" r="38" fill="url(#eg)" fill-opacity=".08" stroke="url(#eg)" stroke-opacity=".2"
+                  stroke-width="1.5" />
+                <path d="M27 22h16l10 10v26H27V22z" fill="url(#eg)" fill-opacity=".15" stroke="url(#eg)"
+                  stroke-width="1.5" />
+                <path d="M43 22l10 10H43V22z" fill="url(#eg)" fill-opacity=".3" />
+                <path d="M32 38h16M32 43h16M32 48h10" stroke="url(#eg)" stroke-width="1.5" stroke-linecap="round" />
+                <defs>
+                  <linearGradient id="eg" x1="2" y1="2" x2="78" y2="78" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#6366f1" />
+                    <stop offset="1" stop-color="#8b5cf6" />
+                  </linearGradient>
+                </defs>
+              </svg>
+              <p class="empty-title">אין הגשות עדיין</p>
+              <p class="empty-sub">מלא טופס או העלה מסמך PDF ראשון</p>
+            </div>
+            <div id="historyList" class="file-list"></div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <footer class="footer">
+      <span>SecureDocs &copy; 2026 · כל הזכויות שמורות</span>
+      <span class="footer-secure">
+        <svg viewBox="0 0 16 16" fill="currentColor" width="12">
+          <path d="M8 1l6 2.5V8c0 3.5-3 6-6 7C5 14 2 11.5 2 8V3.5L8 1z" />
+        </svg>
+        מערכת מאובטחת
+      </span>
+    </footer>
+  </section>
+
+  <!-- ══════════════ SUBMISSION SUCCESS MODAL ══════════════ -->
+  <div id="successModal" class="modal hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-box modal-box-sm glass-card" style="text-align:center">
+      <div class="success-modal-inner">
+        <div class="success-anim">
+          <svg viewBox="0 0 80 80" fill="none" width="80">
+            <circle cx="40" cy="40" r="38" fill="url(#sg)" fill-opacity=".15" stroke="url(#sg)" stroke-width="2" />
+            <path d="M24 41l11 11L56 28" stroke="url(#sg)" stroke-width="3.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <defs>
+              <linearGradient id="sg" x1="2" y1="2" x2="78" y2="78" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#10b981" />
+                <stop offset="1" stop-color="#059669" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <h3>הטופס הוגש בהצלחה!</h3>
+        <p id="successRef" style="color:var(--text-2);font-size:.85rem;margin:.5rem 0"></p>
+        <p style="color:var(--text-3);font-size:.82rem">מספר אסמכתה נשמר בהיסטוריה שלך</p>
+        <button class="btn btn-primary" id="successClose" style="margin-top:1.25rem;width:100%">סגור</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ PDF PREVIEW MODAL ══════════════ -->
+  <div id="previewModal" class="modal hidden">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-box glass-card">
+      <div class="modal-header">
+        <h3 id="modalTitle">תצוגת מסמך</h3>
+        <button class="modal-close" id="modalClose"><svg viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+              clip-rule="evenodd" />
+          </svg></button>
+      </div>
+      <div class="modal-body"><iframe id="pdfPreview" title="תצוגת PDF"></iframe></div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="modalCloseBtn">סגור</button>
+        <button class="btn btn-primary" id="modalDownloadBtn">הורד</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ DELETE MODAL ══════════════ -->
+  <div id="deleteModal" class="modal hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-box modal-box-sm glass-card">
+      <div class="modal-header">
+        <h3>אישור מחיקה</h3>
+      </div>
+      <div class="modal-body modal-body-center">
+        <div class="delete-icon"><svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5l-1-1h-5l-1 1H5v2h14V4z" />
+          </svg></div>
+        <p>האם אתה בטוח שברצונך למחוק?</p>
+        <p class="delete-filename" id="deleteFilename"></p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="deleteCancelBtn">ביטול</button>
+        <button class="btn btn-danger" id="deleteConfirmBtn">מחק</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ FORM DETAIL MODAL ══════════════ -->
+  <div id="formDetailModal" class="modal hidden">
+    <div class="modal-backdrop" id="formDetailBackdrop"></div>
+    <div class="modal-box glass-card" style="max-width:620px">
+      <div class="modal-header">
+        <h3>פרטי הגשה</h3>
+        <button class="modal-close" id="formDetailClose"><svg viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+              clip-rule="evenodd" />
+          </svg></button>
+      </div>
+      <div class="modal-body form-detail-body" id="formDetailBody"></div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="formDetailCloseBtn">סגור</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- MSAL.js v2.38.3 — local copy, no CDN dependency -->
+  <script src="msal-browser.min.js"></script>
+  <!-- Google Identity Services -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <!-- Azure AD config -->
+  <script src="az-config.js"></script>
+  <!-- Google config -->
+  <script src="google-config.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
