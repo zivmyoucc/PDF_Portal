@@ -36,8 +36,8 @@ const AZ_CONFIG = {
     // ── Redirect URI ──────────────────────────────────────────────
     // Must EXACTLY match one of the Redirect URIs you registered in Azure.
     // window.location.origin gives you e.g. "http://localhost:5500"
-    REDIRECT_URI: window.location.origin + '/',
-     //   REDIRECT_URI: https://black-water-010e27603.2.azurestaticapps.net 
+    // REDIRECT_URI: window.location.origin + '/',
+    REDIRECT_URI: https://black-water-010e27603.2.azurestaticapps.net 
     // ── Scopes requested from Azure AD ───────────────────────────
     SCOPES: ['User.Read', 'openid', 'profile', 'email'],
 
@@ -50,6 +50,7 @@ const AZ_CONFIG = {
     ALLOW_LOCAL_FALLBACK: true,
 
 };
+
 
 
 
